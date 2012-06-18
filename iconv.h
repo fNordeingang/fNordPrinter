@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <string>
 #include <iconv.h>
 
@@ -33,6 +32,12 @@ char *convert(const char *from, const char *to, char *src) {
 	if(iconv_value == (size_t)-1)
 		return (0);
 	return target_start;
+}
+
+char *convertUTF8To(std::string outEnc, std::string str) {
+	const char *src = str.c_str();
+	char *res = convert("UTF-8", outEnc.c_str(), (char *)src);
+	return res;
 }
 
 char *convertUTF8ToCP437(std::string str) {

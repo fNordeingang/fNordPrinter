@@ -11,5 +11,7 @@ fNordPrinter.build
 fNordPrinter.xcodeproj
 fNordPrinter.*
 printer
+printer.*
+*.dSYM
 fNordPrinter
 -
