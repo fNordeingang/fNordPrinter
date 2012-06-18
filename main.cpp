@@ -7,6 +7,7 @@
 #include <string>
 
 const char data[]="track=piraten";
+std::string filename;
 
 static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
 {
@@ -17,8 +18,7 @@ static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
 		const char *created_at = ((*tweet)["created_at"]);
 	    char *converted = convertUTF8ToCP437(text);
 		FILE *file; 
-		file = fopen("out","a+"); /* apend file (add text to 
-		a file or create a file if it does not exist.*/ 
+		file = fopen(filename.c_str(), "a+"); 
 		fprintf(file,"%s %s: %s\n\n", created_at, screenName, converted);
 		fclose(file); /*done!*/ 
     }
@@ -28,10 +28,16 @@ static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
 
 int main(int argc, char **argv)
 {
+	if(argc != 4) {
+		printf("usage: %s <username> <password> <filename or device>\n", argv[0]);
+		exit(-1);
+	}
+	
     CURL *curl;
     CURLcode res;
 	std::string user = argv[1];
 	std::string password = argv[2];
+	filename = argv[3];
 	std::string login = user + ":" + password;
 	std::string endpoint = "https://"+login+"@stream.twitter.com/1/statuses/filter.json";
 
