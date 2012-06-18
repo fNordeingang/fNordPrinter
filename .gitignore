@@ -1,0 +1,11 @@
+build
+CMakeFiles
+CMakeScripts
+CMakeCache.txt
+CMakeLists.txt.user
+out
+Debug
+cmake_install.cmake
+fNordPrinter.build
+fNordPrinter.xcodeproj
+
