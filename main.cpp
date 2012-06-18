@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 #include <string.h>
 #include <curl/curl.h>
 #include "json.h"
