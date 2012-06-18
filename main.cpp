@@ -6,7 +6,7 @@
 #include "iconv.h"
 #include <string>
 
-const char data[]="track=fnordeingang";
+std::string trackPhrase = "track=";
 std::string filename;
 
 static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
@@ -28,8 +28,8 @@ static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
 
 int main(int argc, char **argv)
 {
-	if(argc != 4) {
-		printf("usage: %s <username> <password> <filename or device>\n", argv[0]);
+	if(argc != 5) {
+		printf("usage: %s <username> <password> <filename or device> <track phrase>\n", argv[0]);
 		exit(-1);
 	}
 	
@@ -38,6 +38,7 @@ int main(int argc, char **argv)
 	std::string user = argv[1];
 	std::string password = argv[2];
 	filename = argv[3];
+	trackPhrase += argv[4];
 	std::string login = user + ":" + password;
 	std::string endpoint = "https://"+login+"@stream.twitter.com/1/statuses/filter.json";
 
@@ -51,7 +52,7 @@ int main(int argc, char **argv)
 
         /* we want to use our own read function */
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, trackPhrase.c_str());
 
         /* get verbose debug output please */
         curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
