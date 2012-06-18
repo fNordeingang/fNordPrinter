@@ -6,7 +6,7 @@
 #include "iconv.h"
 #include <string>
 
-const char data[]="track=piraten";
+const char data[]="track=fnordeingang";
 std::string filename;
 
 static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
