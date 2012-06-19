@@ -17,7 +17,7 @@ if ( NOT ICONV_FOUND )
     message(FATAL_ERROR "ICONV not found !")
 endif ( NOT ICONV_FOUND )
 
-Find_Package(Boost REQUIRED)
+Find_Package(Boost 1.47 COMPONENTS program_options REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 if ( NOT Boost_FOUND )
     message(FATAL_ERROR "Boost not found !")
@@ -33,4 +33,5 @@ target_link_libraries(
     ${CURL_LIBRARY}
 	${ICONV_LIBRARY}
 	${Boost_LIBRARY}
+	${Boost_PROGRAM_OPTIONS_LIBRARY}
 )

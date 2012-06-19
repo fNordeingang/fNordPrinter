@@ -36,7 +36,7 @@ static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
 		else {
 			converted = (char *)text;
 		}
-		if(filename != "-") {
+		if(filename != "stdout") {
 			FILE *file; 
 			file = fopen(filename.c_str(), "a+"); 
 			fprintf(file,format.c_str(), created_at, screenName, converted);
@@ -60,17 +60,20 @@ int main(int argc, char **argv)
 	po::options_description desc("Allowed options");
 	desc.add_options()
 		("help,h", "produce help message")
-		("file,f", po::value<std::string>(&filename)->required(), "set filename, use - for stdout")
+		("file,f", po::value<std::string>(&filename)->default_value("stdout"), "set filename")
 		("encoding,e", po::value<std::string>(&encoding)->default_value("UTF-8"), "output encodig")
-		("username,u", po::value<std::string>(&username)->required(), "twitter username")
-		("password,p", po::value<std::string>(&password)->required(), "twitter password")
-		("track,t", po::value<std::string>(&searchText)->required(), "search text")
+		("username,u", po::value<std::string>(&username)->required()->composing(), "twitter username")
+		("password,p", po::value<std::string>(&password)->required()->composing(), "twitter password")
+		("track,t", po::value<std::string>(&searchText)->required()->composing(), "search text")
 		("verbose,v", "verbose output")
 		;
+	
+	po::variables_map vm;
+	po::positional_options_description pd;
+	pd.add("username", -1);	
 
-	try {
-		po::variables_map vm;
-		po::store(po::parse_command_line(argc, argv, desc), vm);    
+	try {		
+		po::store(po::command_line_parser(argc, argv).options(desc).positional(pd).run(), vm);    
 
 		if (vm.count("help")) {
 			std::cout << desc << std::endl;
