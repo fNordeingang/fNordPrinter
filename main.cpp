@@ -8,6 +8,9 @@
 #include <string>
 #include <boost/program_options.hpp>
 #include <vector>
+#include <boost/regex.hpp> 
+#include <iostream> 
+
 
 std::string trackPhrase = "track=";
 std::string format = "%s %s:\n%s\n\n";
@@ -26,25 +29,28 @@ static size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userp)
 {
 	json_value * tweet = json_parse((char *)ptr);
 	if(size*nmemb > 0 && tweet != 0) {
-		const char *text = ((*tweet)["text"]);
+		std::string text((const char *) ((*tweet)["text"]));
 		const char *screenName = ((*tweet)["user"])["screen_name"];
 		const char *created_at = ((*tweet)["created_at"]);
-		char *converted;
+		boost::regex expr("\\n{2,}"); 
+		std::string fmt("\\n"); 
+		text = boost::regex_replace(text, expr, fmt); 
+		std::string converted;
 		if(encoding != "UTF-8") {
 			converted = convertUTF8ToCP437(text);
 		}
 		else {
-			converted = (char *)text;
+			converted = text;
 		}
 		if(filename != "stdout") {
 			FILE *file; 
 			file = fopen(filename.c_str(), "a+"); 
-			fprintf(file,format.c_str(), created_at, screenName, converted);
+			fprintf(file,format.c_str(), created_at, screenName, converted.c_str());
 			fclose(file);	
 		}
 		else {
 			currentTweet++;
-			printf(format.c_str(), created_at, screenName, converted);
+			printf(format.c_str(), created_at, screenName, converted.c_str());
 			if(currentTweet >= clear) {
 				system("clear");
 				currentTweet = 0;

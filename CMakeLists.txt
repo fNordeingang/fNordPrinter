@@ -17,7 +17,7 @@ if ( NOT ICONV_FOUND )
     message(FATAL_ERROR "ICONV not found !")
 endif ( NOT ICONV_FOUND )
 
-Find_Package(Boost 1.47 COMPONENTS program_options REQUIRED)
+Find_Package(Boost 1.47 COMPONENTS system filesystem regex program_options REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 if ( NOT Boost_FOUND )
     message(FATAL_ERROR "Boost not found !")
@@ -31,7 +31,10 @@ add_executable(${PROJECT_NAME} ${SRC_LIST})
 target_link_libraries(
     fNordPrinter
     ${CURL_LIBRARY}
-	${ICONV_LIBRARY}
-	${Boost_LIBRARY}
-	${Boost_PROGRAM_OPTIONS_LIBRARY}
+    ${ICONV_LIBRARY}
+    ${Boost_LIBRARY}
+    ${Boost_PROGRAM_OPTIONS_LIBRARY}
+    ${Boost_REGEX_LIBRARY}
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
 )
