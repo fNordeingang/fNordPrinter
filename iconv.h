@@ -1,4 +1,5 @@
 #include <string>
+#include <cstdlib>
 #include <iconv.h>
 
 char *convert(const char *from, const char *to, char *src) {
