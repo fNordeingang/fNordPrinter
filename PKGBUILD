@@ -2,13 +2,13 @@
 
 pkgname=fnordprinter
 pkgver=20131110
-pkgrel=1
+pkgrel=2
 pkgdesc="twitter to the shell or somewhere else"
 arch=('i686' 'x86_64')
 url="http://fNordeingang.de"
 license=('BSD')
-depends=('node')
-makedepends=('node' 'git' )
+depends=('nodejs')
+makedepends=('nodejs' 'git' )
 source=()
 noextract=()
 md5sums=() #generate with 'makepkg -g'
