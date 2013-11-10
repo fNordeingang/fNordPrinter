@@ -1,0 +1,15 @@
+{
+  "name": "fNordPrinter",
+  "version": "0.0.1",
+  "description": "Print Twitter stream for fNordeigang to Nadeldrucker",
+  "main": "printer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vileda",
+  "license": "GPL",
+  "dependencies": {
+    "ntwitter": "0.5.0",
+    "iconv-lite": "0.2.11"
+  }
+}
